@@ -1,0 +1,89 @@
+[%
+# This is a block that just sets up the sample form.
+# It's a block because below this we're using the same code twice,
+# the only difference being the form class ("form-vertical" vs "form-horizontal")
+#
+# This works much better if you use Catalyst::Plugin::MessageStack and have
+# a DataManager model paired.
+#
+#
+MACRO form_block BLOCK %]
+    [% context.scope = 'guide' %]
+
+    [% text_field({ label => 'Your Name', name => 'name',
+        value => 'This is focused', placeholder => 'Placeholder Text',
+        required => 1 }) %]
+
+    [% text_field({ label => 'Prepended', name => 'prepended_name', prepend => '&larr;',
+        value => 'This is focused', placeholder => 'Placeholder Text',
+        required => 1,
+        #support => 'Support text', warning => 'And a warning'
+    }) %]
+
+    [% text_field({ label => 'Appended', name => 'appended_name',
+        append => '&rarr;',
+        value => 'Trailing', placeholder => 'Placeholder Text',
+        required => 1,
+        support => 'Support text', warning => 'And a warning'
+    }) %]
+
+    [% text_field({ label => 'Going both ways', name => 'app_pre_name',
+        classes => [ 'span2' ],
+        prepend => '&larr;', append => '&rarr;',
+        value => 'Neat', placeholder => 'Placeholder Text',
+        required => 1,
+        support => 'Support text', error => 'Pick a direction'
+    }) %]
+
+    [% select_field({ label => 'A Select', name => 'select',
+        value => 1,
+        array => [ [ 0, 'Zero' ], [ 1, 'One' ], [ 2, 'Two' ] ],
+        value_method => '0', label_method => '1',
+        required => 1 }) %]
+
+    [% readonly_field({ label => 'Readonly', name => 'readonly_name',
+        value => 'This is read-only' }) %]
+
+    [% password_field({ label => 'A Password', name => 'password' }) %]
+
+    [% textarea_field({ label => 'Block of Text', name => 'textarea',
+        value => 'This is a textbox. You should have noticed.',
+        success => 'With a message',
+        support => 'field_support' }) %]
+
+    [% checkboxes({ label => 'And checkboxes', name => 'checkboxes',
+        array => [ [ 0, 'Zero' ], [ 1, 'One' ], [ 2, 'Two' ] ],
+        value_method => '0', label_method => '1',
+        error => 'Oh no. Failed.'
+    }) %]
+
+    [% text_field({ label => 'Disabled', name => 'disabled', value => 'This is disabled', disabled => 1 }) %]
+
+    [% text_field({ label => 'Warning', name => 'has_warning',
+        value => 'This has a warning', warning => 'Something may be wrong', }) %]
+
+    [% text_field({ label => 'Error', name => 'has_error',
+        value => 'This has an error', error => 'Something did go wrong', }) %]
+
+    [% text_field({ label => 'Success', name => 'has_success',
+        value => 'This is successful', success => 'Celebrate good times', }) %]
+
+    [% form_actions([
+        { label => 'Save changes' }, # Defaults to submit
+        { label => 'Cancel', type => 'cancel' }
+    ]) %]
+[% END %]
+
+<form method="post" class="form-vertical">
+  <fieldset>
+    <legend>Vertical Form</legend>
+    [% form_block %]
+  </fieldset>
+</form>
+
+<form class="form-horizontal" method="post">
+  <fieldset>
+    <legend>Horizontal Form</legend>
+    [% form_block %]
+  </fieldset>
+</form>

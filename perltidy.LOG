@@ -1,0 +1,88 @@
+perltidy version 20180220 log file on a darwin system, OLD_PERL_VERSION=5.018002
+Configuration and command line parameters for this run:
+-pro=.../.perltidyrc
+To find error messages search for 'WARNING' with your editor
+Indentation will be with 4 spaces
+Line 1 implies starting-indentation-level = 0
+
+########################  WARNING  #########################
+51: $activityFactor = 1.9;
+    ^                     
+found Scalar where operator expected
+############################################################
+
+########################  WARNING  #########################
+Missing ';' above?
+############################################################
+WARNING: expecting 'else' to follow one of 'if|elsif|unless|case|when'
+
+########################  WARNING  #########################
+There is no previous '{' to match a '}' on line 85
+85: }
+    ^
+############################################################
+WARNING: Starting negative indentation
+WARNING: final indentation level: -1
+Suggest including 'use warnings;'
+Suggest including 'use strict;'
+The nesting depths in the table below are at the start of the lines.
+The indicated output line numbers are not always exact.
+ci = levels of continuation indentation; bk = 1 if in BLOCK, 0 if not.
+
+in:out indent c b  nesting   code + messages; (messages begin with >>>)
+lines  levels i k            (code begins with one '.' per indent level)
+------  ----- - - --------   -------------------------------------------
+L6:5     i0:1 0 1 {          >>>Start indentation disagreement: input=0; output=1
+L14:14   i0:1 0 1 {          >>>Line length exceeded by 10 characters
+L29:29   i0:1 0 1 {          >>>Line length exceeded by 1 characters
+L31:33   i0:1 0 1 {          >>>Embedded tabs in quote or pattern
+L32:34   i0:1 0 1 {          >>>Embedded tabs in quote or pattern
+L33:35   i0:1 0 1 {          >>>Embedded tabs in quote or pattern
+L34:36   i0:1 0 1 {          >>>Embedded tabs in quote or pattern
+L35:37   i0:1 0 1 {          >>>Embedded tabs in quote or pattern
+L36:38   i0:1 0 1 {          >>>Embedded tabs in quote or pattern
+L50:55   i0:1 0 1 {{         .} elsif ($activityLevel == 5)
+L52:57   i0:0 0 1 {          >>>End indentation disagreement from input line 6
+L53:59   i0:1 0 1 {          >>>Start indentation disagreement: input=0; output=1
+L54:60   i0:0 0 1 {          >>>End indentation disagreement from input line 53
+L57:63   i0:1 0 1 {          >>>Start indentation disagreement: input=0; output=1
+L57:63   i0:1 0 1 {          >>>Line length exceeded by 17 characters
+L59:66   i0:0 0 1 {          >>>End indentation disagreement from input line 57
+L60:68   i0:1 0 1 {          >>>Start indentation disagreement: input=0; output=1
+L60:68   i0:1 0 1 {          >>>Line length exceeded by 10 characters
+L62:71   i0:0 0 1 {          >>>End indentation disagreement from input line 60
+L63:73   i0:1 0 1 {          >>>Start indentation disagreement: input=0; output=1
+L63:73   i0:1 0 1 {          >>>Line length exceeded by 7 characters
+L65:76   i0:0 0 1 {          >>>End indentation disagreement from input line 63
+L70:81   i0:0 0 1            >>>Line length exceeded by 25 characters
+L80:94   i0:1 0 1 {          >>>Start indentation disagreement: input=0; output=1
+L81:95   i0:0 0 1 {          >>>End indentation disagreement from input line 80
+L81:95   i0:0 0 1 {          >>>No further tabbing disagreements will be noted
+L85:100  i0:-1 0 1            >>>WARNING: Program bug in scan_list: hit nesting error which should have been caught
+6 quotes or patterns had embedded tabs:
+This means the display of this script could vary with device or software
+  First at input line 31
+   Last at input line 36
+
+First indentation disagreement seen at input line 6
+Ending with indentation disagreement which started at input line 85
+Note: Indentation disagreement detection is not accurate for outdenting and -lp.
+
+8 long lines were outdented:
+  First at output line 15
+   Last at output line 90
+  use -noll to prevent outdenting, -l=n to increase line length
+
+7 output lines exceeded 80 characters:
+ First at line 15 by 10 characters
+ Maximum at line 82 by 25 characters
+ Last at line 90 by 6 characters
+WARNING: To save a full .LOG file rerun with -g
+WARNING: 
+Oops, you seem to have encountered a bug in perltidy.  Please check the
+BUGS file at http://perltidy.sourceforge.net.  If the problem is not
+listed there, please report it so that it can be corrected.  Include the
+smallest possible script which produces this message, along with the
+.LOG file if appropriate.  See the manual pages for contact information.
+Your efforts are appreciated.  
+Thank you!
