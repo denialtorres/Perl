@@ -1,0 +1,11 @@
+Run script/myapp_server.pl to test the application.
+
+
+Cheatsheet
+
+Crear Controllers
+
+perl script/myapp_create.pl controller Hello
+
+builder install
+perl Makefile.PL && make
