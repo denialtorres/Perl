@@ -39,6 +39,7 @@
             "Catalyst::Runtime" : "5.90124",
             "Catalyst::View::TT" : "0",
             "Config::General" : "0",
+            "DBD::SQLite" : "0",
             "Moose" : "0",
             "Pry" : "0",
             "namespace::autoclean" : "0"

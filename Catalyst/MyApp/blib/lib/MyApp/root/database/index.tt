@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Hello, database!</title>
+  </head>
+  <body>
+    <h1>Database</h1>
+    <p>Here's what the database looks like: </p>
+    <ol>
+      [% WHILE (message = message.next) %]
+      <li>
+        <p>Message: <b> [% message.subject | html %]</b> (#[% message.id | html %]):</p>
+        <p>
+          [% message.message | html %]
+        </p>
+        <p>Written at <i>[% message.date | html %]</i></p>
+      </li>
+      <% END %>
+    </ol>
+  </body>
+</html>

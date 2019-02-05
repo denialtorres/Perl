@@ -7,7 +7,7 @@
   <body>
     <h1>Hello World!</h1>
     <p>
-      Here's word from our controller [% word | html %].
+      Here's word from our controller [% word %].
     </p>
   </body>
 </html>

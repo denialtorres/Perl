@@ -25,7 +25,9 @@ requires:
   Catalyst::Runtime: '5.90124'
   Catalyst::View::TT: '0'
   Config::General: '0'
+  DBIx::Class::Schema::Loader: '0'
   Moose: '0'
+  Pry: '0'
   namespace::autoclean: '0'
 resources:
   license: http://dev.perl.org/licenses/

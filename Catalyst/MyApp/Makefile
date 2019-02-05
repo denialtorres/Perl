@@ -20,13 +20,13 @@
 #     LICENSE => q[perl]
 #     NAME => q[MyApp]
 #     NO_META => q[1]
-#     PREREQ_PM => { Catalyst::Action::RenderView=>q[0], Catalyst::Plugin::ConfigLoader=>q[0], Catalyst::Plugin::Static::Simple=>q[0], Catalyst::Runtime=>q[5.90124], Catalyst::View::TT=>q[0], Config::General=>q[0], ExtUtils::MakeMaker=>q[6.36], Moose=>q[0], Pry=>q[0], Test::More=>q[0.88], namespace::autoclean=>q[0] }
+#     PREREQ_PM => { Catalyst::Action::RenderView=>q[0], Catalyst::Plugin::ConfigLoader=>q[0], Catalyst::Plugin::Static::Simple=>q[0], Catalyst::Runtime=>q[5.90124], Catalyst::View::TT=>q[0], Config::General=>q[0], DBD::SQLite=>q[0], ExtUtils::MakeMaker=>q[6.36], Moose=>q[0], Pry=>q[0], Test::More=>q[0.88], namespace::autoclean=>q[0] }
 #     TEST_REQUIRES => {  }
 #     VERSION => q[0.01]
 #     VERSION_FROM => q[lib/MyApp.pm]
 #     dist => { PREOP=>q[$(PERL) -I. "-MModule::Install::Admin" -e "dist_preop(q($(DISTVNAME)))"] }
 #     realclean => { FILES=>q[MYMETA.yml] }
-#     test => { TESTS=>q[t/01app.t t/02pod.t t/03podcoverage.t t/controller_Hello.t t/view_TT.t] }
+#     test => { TESTS=>q[t/01app.t t/02pod.t t/03podcoverage.t t/controller_Database.t t/controller_Hello.t t/model_TestDatabase.t t/view_TT.t] }
 
 # --- MakeMaker post_initialize section:
 
@@ -176,8 +176,11 @@ MAN1PODS = script/myapp_cgi.pl \
 	script/myapp_server.pl \
 	script/myapp_test.pl
 MAN3PODS = lib/MyApp.pm \
+	lib/MyApp/Controller/Database.pm \
 	lib/MyApp/Controller/Hello.pm \
 	lib/MyApp/Controller/Root.pm \
+	lib/MyApp/Model/TestDatabase.pm \
+	lib/MyApp/Schema/TestDatabase.pm \
 	lib/MyApp/View/TT.pm
 
 # Where is the Config information that we are using/depend on
@@ -202,8 +205,11 @@ PERL_ARCHIVE_AFTER =
 
 
 TO_INST_PM = lib/MyApp.pm \
+	lib/MyApp/Controller/Database.pm \
 	lib/MyApp/Controller/Hello.pm \
 	lib/MyApp/Controller/Root.pm \
+	lib/MyApp/Model/TestDatabase.pm \
+	lib/MyApp/Schema/TestDatabase.pm \
 	lib/MyApp/View/TT.pm
 
 
@@ -431,8 +437,11 @@ POD2MAN = $(POD2MAN_EXE)
 
 manifypods : pure_all config  \
 	lib/MyApp.pm \
+	lib/MyApp/Controller/Database.pm \
 	lib/MyApp/Controller/Hello.pm \
 	lib/MyApp/Controller/Root.pm \
+	lib/MyApp/Model/TestDatabase.pm \
+	lib/MyApp/Schema/TestDatabase.pm \
 	lib/MyApp/View/TT.pm \
 	script/myapp_cgi.pl \
 	script/myapp_create.pl \
@@ -447,8 +456,11 @@ manifypods : pure_all config  \
 	  script/myapp_test.pl $(INST_MAN1DIR)/myapp_test.pl.$(MAN1EXT) 
 	$(NOECHO) $(POD2MAN) --section=3 --perm_rw=$(PERM_RW) -u \
 	  lib/MyApp.pm $(INST_MAN3DIR)/MyApp.$(MAN3EXT) \
+	  lib/MyApp/Controller/Database.pm $(INST_MAN3DIR)/MyApp::Controller::Database.$(MAN3EXT) \
 	  lib/MyApp/Controller/Hello.pm $(INST_MAN3DIR)/MyApp::Controller::Hello.$(MAN3EXT) \
 	  lib/MyApp/Controller/Root.pm $(INST_MAN3DIR)/MyApp::Controller::Root.$(MAN3EXT) \
+	  lib/MyApp/Model/TestDatabase.pm $(INST_MAN3DIR)/MyApp::Model::TestDatabase.$(MAN3EXT) \
+	  lib/MyApp/Schema/TestDatabase.pm $(INST_MAN3DIR)/MyApp::Schema::TestDatabase.$(MAN3EXT) \
 	  lib/MyApp/View/TT.pm $(INST_MAN3DIR)/MyApp::View::TT.$(MAN3EXT) 
 
 
@@ -830,7 +842,7 @@ $(MAKE_APERL_FILE) : static $(FIRST_MAKEFILE) pm_to_blib
 TEST_VERBOSE=0
 TEST_TYPE=test_$(LINKTYPE)
 TEST_FILE = test.pl
-TEST_FILES = t/01app.t t/02pod.t t/03podcoverage.t t/controller_Hello.t t/view_TT.t
+TEST_FILES = t/01app.t t/02pod.t t/03podcoverage.t t/controller_Database.t t/controller_Hello.t t/model_TestDatabase.t t/view_TT.t
 TESTDB_SW = -d
 
 testdb :: testdb_$(LINKTYPE)
@@ -874,6 +886,7 @@ ppd :
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Runtime" VERSION="5.90124" />' >> MyApp.ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::View::TT" />' >> MyApp.ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Config::General" />' >> MyApp.ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="DBD::SQLite" />' >> MyApp.ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Moose::" />' >> MyApp.ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Pry::" />' >> MyApp.ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="namespace::autoclean" />' >> MyApp.ppd
@@ -888,8 +901,11 @@ ppd :
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
 	  'lib/MyApp.pm' 'blib/lib/MyApp.pm' \
+	  'lib/MyApp/Controller/Database.pm' 'blib/lib/MyApp/Controller/Database.pm' \
 	  'lib/MyApp/Controller/Hello.pm' 'blib/lib/MyApp/Controller/Hello.pm' \
 	  'lib/MyApp/Controller/Root.pm' 'blib/lib/MyApp/Controller/Root.pm' \
+	  'lib/MyApp/Model/TestDatabase.pm' 'blib/lib/MyApp/Model/TestDatabase.pm' \
+	  'lib/MyApp/Schema/TestDatabase.pm' 'blib/lib/MyApp/Schema/TestDatabase.pm' \
 	  'lib/MyApp/View/TT.pm' 'blib/lib/MyApp/View/TT.pm' 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
@@ -948,14 +964,14 @@ installdeps_notest ::
 	$(NOECHO) $(NOOP)
 
 upgradedeps ::
-	$(PERL) Makefile.PL --config= --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90124,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Action::RenderView,0,Moose,0,Catalyst::View::TT,0,Pry,0,namespace::autoclean,0,Config::General,0
+	$(PERL) Makefile.PL --config= --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90124,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Action::RenderView,0,Moose,0,Catalyst::View::TT,0,Pry,0,DBD::SQLite,0,namespace::autoclean,0,Config::General,0
 
 upgradedeps_notest ::
-	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90124,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Action::RenderView,0,Moose,0,Catalyst::View::TT,0,Pry,0,namespace::autoclean,0,Config::General,0
+	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90124,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Action::RenderView,0,Moose,0,Catalyst::View::TT,0,Pry,0,DBD::SQLite,0,namespace::autoclean,0,Config::General,0
 
 listdeps ::
 	@$(PERL) -le "print for @ARGV" 
 
 listalldeps ::
-	@$(PERL) -le "print for @ARGV" Test::More Catalyst::Runtime Catalyst::Plugin::ConfigLoader Catalyst::Plugin::Static::Simple Catalyst::Action::RenderView Moose Catalyst::View::TT Pry namespace::autoclean Config::General
+	@$(PERL) -le "print for @ARGV" Test::More Catalyst::Runtime Catalyst::Plugin::ConfigLoader Catalyst::Plugin::Static::Simple Catalyst::Action::RenderView Moose Catalyst::View::TT Pry DBD::SQLite namespace::autoclean Config::General
 

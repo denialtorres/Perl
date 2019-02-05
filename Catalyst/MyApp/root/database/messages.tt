@@ -1,0 +1,8 @@
+<h1>Hola mundo!</h1>
+
+[% FOREACH message IN messages -%]
+    <p>Message: <b> [% message.subject | html %]</b> (#[% message.id | html %]):</p>
+    <p>
+      [% message.message | html %]
+    </p>
+[% END -%]

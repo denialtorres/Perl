@@ -16,6 +16,7 @@ requires 'Catalyst::Action::RenderView';
 requires 'Moose';
 requires 'Catalyst::View::TT' => 0;
 requires 'Pry';
+requires 'DBD::SQLite';
 requires 'namespace::autoclean';
 requires 'Config::General'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
